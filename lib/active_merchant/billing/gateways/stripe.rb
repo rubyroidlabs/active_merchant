@@ -239,6 +239,9 @@ module ActiveMerchant #:nodoc:
         post[:metadata] = {}
         post[:metadata][:email] = options[:email] if options[:email]
         post[:metadata][:order_id] = options[:order_id] if options[:order_id]
+        # PATCH: Add puchased products SKUs to metadata
+        post[:metadata][:skus_purchased] = options[:skus_purchased] if options[:skus_purchased]
+        # PATCH END
         post.delete(:metadata) if post[:metadata].empty?
 
         add_flags(post, options)
