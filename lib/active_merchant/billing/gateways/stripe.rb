@@ -284,6 +284,13 @@ module ActiveMerchant #:nodoc:
           add_customer(post, payment, options)
           add_flags(post, options)
         end
+        post[:metadata] = {}
+        post[:metadata][:email] = options[:email] if options[:email]
+        post[:metadata][:order_id] = options[:order_id] if options[:order_id]
+        # PATCH: Add puchased products SKUs to metadata
+        post[:metadata][:skus_purchased] = options[:skus_purchased] if options[:skus_purchased]
+        # PATCH END
+        post.delete(:metadata) if post[:metadata].empty?
 
         add_application_fee(post, options)
         add_destination(post, options)
